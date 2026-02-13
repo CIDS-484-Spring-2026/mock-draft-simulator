@@ -52,3 +52,16 @@ Need data including but not limited to,
 * Build FastAPI prototype
 * Show that React and FastAPI can communicate
 * Begin determining draft logic
+
+## **Completed in Milestone 1**
+
+* Set project structure
+* Completed initial README
+* Built FastAPI prototype
+
+## **Milestone 2 Goals**
+
+* Build React prototype
+* Begin determining draft logic
+* Dynamically get player data from a source (ESPN, Yahoo, etc)
+* Continue to work on backend
