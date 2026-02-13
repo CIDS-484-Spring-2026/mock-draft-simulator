@@ -65,3 +65,7 @@ Need data including but not limited to,
 * Begin determining draft logic
 * Dynamically get player data from a source (ESPN, Yahoo, etc)
 * Continue to work on backend
+
+## Milestone Videos
+
+https://mediaspace.wisconsin.edu/media/Milestone+1+-+FF+Mock+Draft+Simulator/1_gcak3l37
