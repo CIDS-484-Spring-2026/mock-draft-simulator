@@ -1,6 +1,6 @@
 # **Fantasy Football Mock Draft Simulator**
 
-This project aims to be a web-based fantasy football mock draft simulator. A user will be able to practice for their upcoming fantasy football season by drafting with their league's rules against CPU controlled teams. These CPU teams will draft players based on real data such as average draft position, current team needs, and more customizable criteria as well. The CPU will also have customizable settings such as draft strategy and position bias to simulate real strategies your leaguemates make.
+This project aims to be a web-based fantasy football mock draft simulator. A user will be able to practice for their upcoming fantasy football season by drafting with their league's rules against CPU-controlled teams. These CPU teams will draft players based on real data such as average draft position, current team needs, and more customizable criteria as well. The CPU will also have customizable settings such as draft strategy and position bias to simulate real strategies your league mates make.
 
 This project's main goal is to help give a user realistic, accurate, and fast practice for an upcoming fantasy football draft.
 
@@ -9,7 +9,7 @@ This project's main goal is to help give a user realistic, accurate, and fast pr
 
 **Frontend - React**
 
-Will handle UI elements including, 
+Will handle UI elements including the following, 
 * Draft board grid
 * Player list and filters
 * Views of team rosters as the draft progresses
@@ -21,10 +21,10 @@ Will handle UI elements including,
 Will handle draft logic including, 
 * Creating a draft
 * Draft order
-* Draft type (Snake, Auction, Dynasty, etc)
+* Draft type (Snake, Auction, Dynasty, etc.)
 * CPU pick logic
 * Available players
-* Sending current draft state to the frontend
+* Sending the current draft state to the frontend
 
 
 **Data - JSON -> Database**
@@ -63,8 +63,8 @@ Need data including but not limited to,
 
 * Build React prototype
 * Begin determining draft logic
-* Dynamically get player data from a source (ESPN, Yahoo, etc)
-* Continue to work on backend
+* Dynamically get player data from a source (ESPN, Yahoo, etc.)
+* Continue to work on the backend
 
 ## **Milestone Videos**
 

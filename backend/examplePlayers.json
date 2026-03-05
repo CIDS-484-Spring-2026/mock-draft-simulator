@@ -1,1 +1,22 @@
-
+[
+  {"id": 1, "name": "Bijan Robinson", "position": "RB", "team": "ATL", "adp": 1.0},
+  {"id": 2, "name": "Jahmyr Gibbs", "position": "RB", "team": "DET", "adp": 2.0},
+  {"id": 3, "name": "Christian McCaffrey", "position": "RB", "team": "SF", "adp": 3.0},
+  {"id": 4, "name": "Tyreek Hill", "position": "WR", "team": "FA", "adp": 4.0},
+  {"id": 5, "name": "CeeDee Lamb", "position": "WR", "team": "DAL", "adp": 5.0},
+  {"id": 6, "name": "Breece Hall", "position": "RB", "team": "NYJ", "adp": 6.0},
+  {"id": 7, "name": "Amon-Ra St. Brown", "position": "WR", "team": "DET", "adp": 7.0},
+  {"id": 8, "name": "Justin Jefferson", "position": "WR", "team": "MIN", "adp": 8.0},
+  {"id": 9, "name": "Ja'Marr Chase", "position": "WR", "team": "CIN", "adp": 9.0},
+  {"id": 10, "name": "Travis Kelce", "position": "TE", "team": "KC", "adp": 10.0},
+  {"id": 11, "name": "Josh Allen", "position": "QB", "team": "BUF", "adp": 11.0},
+  {"id": 12, "name": "Jalen Hurts", "position": "QB", "team": "PHI", "adp": 12.0},
+  {"id": 13, "name": "Jonathan Taylor", "position": "RB", "team": "IND", "adp": 13.0},
+  {"id": 14, "name": "Garrett Wilson", "position": "WR", "team": "NYJ", "adp": 14.0},
+  {"id": 15, "name": "Puka Nacua", "position": "WR", "team": "LAR", "adp": 15.0},
+  {"id": 16, "name": "Kyren Williams", "position": "RB", "team": "LAR", "adp": 16.0},
+  {"id": 17, "name": "Derrick Henry", "position": "RB", "team": "BAL", "adp": 17.0},
+  {"id": 18, "name": "Saquon Barkley", "position": "RB", "team": "PHI", "adp": 18.0},
+  {"id": 19, "name": "Mike Evans", "position": "WR", "team": "TB", "adp": 19.0},
+  {"id": 20, "name": "Davante Adams", "position": "WR", "team": "LV", "adp": 20.0}
+]

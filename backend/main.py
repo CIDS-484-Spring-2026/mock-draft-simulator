@@ -5,7 +5,7 @@ from pathlib import Path
 
 app = FastAPI()
 
-# Load player data from JSON file
+# Load player data from a JSON file
 DATA_PATH = Path(__file__).parent / "examplePlayers.json"
 
 # Find JSON
