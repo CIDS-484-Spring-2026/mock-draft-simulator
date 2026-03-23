@@ -80,6 +80,7 @@ Need data including but not limited to,
 * Add draft simulation with pick order
 * Create CPU draft logic based on ADP, position need, and team strategy
 * Create a roster display for each team as the draft progresses
+* Move data to a database
 
 ## **Milestone Videos**
 
