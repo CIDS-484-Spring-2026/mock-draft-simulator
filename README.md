@@ -88,4 +88,4 @@ Milestone 1:
 https://mediaspace.wisconsin.edu/media/Milestone+1+-+FF+Mock+Draft+Simulator/1_gcak3l37
 
 Milestone 2:
-
+https://mediaspace.wisconsin.edu/media/Milestone+2+-+Mock+Draft+Simulator+-+Kollin+Weikel/1_4r71dyyn
