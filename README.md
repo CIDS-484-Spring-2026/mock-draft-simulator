@@ -66,7 +66,24 @@ Need data including but not limited to,
 * Dynamically get player data from a source (ESPN, Yahoo, etc.)
 * Continue to work on the backend
 
+## **Completed in Milestone 2**
+
+* Built draft board page in react that displays draft information such as players available, a way to search for players, a way to filter players, badges to display projected points, and current pick information
+* The draft board also pulls player information through the FastAPI '/players' endpoint
+* Fully populated JSON file going from 20 players to ~200
+* Added position rankings and overall ranking for each player
+* Created a script to start both the FastAPI backend and the frontend at the same time in 1 command (.\dev.ps1)
+* Researched into dynamically acquiring player data. Due to it being the NFL offseason still, there aren't true rankings available at this moment in time
+
+## **Milestone 3 Goals**
+
+* Add draft simulation with pick order
+* Create CPU draft logic based on ADP, position need, and team strategy
+* Create a roster display for each team as the draft progresses
+
 ## **Milestone Videos**
 
 Milestone 1:
 https://mediaspace.wisconsin.edu/media/Milestone+1+-+FF+Mock+Draft+Simulator/1_gcak3l37
+Milestone 2:
+
