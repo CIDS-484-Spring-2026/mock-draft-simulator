@@ -184,6 +184,22 @@ Need data including but not limited to,
 * Create a roster display for each team as the draft progresses
 * Move data to a database
 
+## **Completed in Milestone 3**
+
+* Added draft simulation with pick order (Snake order)
+* Added a pick clock
+* Added basic CPU draft logic
+* Added 'Start Draft' button
+* Added a Draft Setup to initialize the draft. Can choose team name, how many teams, what position you will draft in, roster size
+* Starting a new draft refreshes the draft board
+* Added roster validation for making a pick such as the maximum number of a position allowed on a team
+
+## **Goals before end of Semester**
+
+* NEED: Add roster view that can switch between teams
+* MAYBE: Switch to database if time permits, not super necessary at the moment
+* MAYBE: Improve CPU draft logic
+
 ## **Milestone Videos**
 
 Milestone 1:
