@@ -8,10 +8,39 @@ function statusTitle(status) {
 }
 
 export default function DraftBoardPage() {
-  const { status, error, data, reload, simulateErrorLoad } = useDraftBoardData()
+  const {
+    status,
+    error,
+    draftActionError,
+    draftingPlayerId,
+    isStartingDraft,
+    startDraftError,
+    data,
+    draftPlayer,
+    startDraft,
+    reload,
+  } = useDraftBoardData()
   const [activePosition, setActivePosition] = useState('ALL')
   const [searchText, setSearchText] = useState('')
   const [sortBy, setSortBy] = useState('adp-asc')
+  const [isSetupOpen, setIsSetupOpen] = useState(true)
+  const [teamName, setTeamName] = useState('Your Team')
+  const [totalTeams, setTotalTeams] = useState(12)
+  const [humanPick, setHumanPick] = useState(6)
+  const [roster, setRoster] = useState({
+    qb: 1,
+    rb: 2,
+    wr: 3,
+    te: 1,
+    flex: 0,
+    k: 1,
+    dst: 1,
+    bench: 6,
+    superflex: 0,
+  })
+
+  const totalRounds =
+    roster.qb + roster.rb + roster.wr + roster.te + roster.flex + roster.k + roster.dst + roster.bench + roster.superflex
 
   const positions = useMemo(() => {
     if (!data?.players?.length) return ['ALL']
@@ -48,8 +77,166 @@ export default function DraftBoardPage() {
     return [...playersByQuery].sort(sorters[sortBy])
   }, [activePosition, data, searchText, sortBy])
 
+  const draftPositionOptions = useMemo(() => {
+    return Array.from({ length: totalTeams }, (_, index) => index + 1)
+  }, [totalTeams])
+
+  const handleRandomizeDraftPosition = () => {
+    const randomPick = Math.floor(Math.random() * totalTeams) + 1
+    setHumanPick(randomPick)
+  }
+
+  const handleRosterChange = (slot, value) => {
+    setRoster((previous) => ({
+      ...previous,
+      [slot]: Number(value),
+    }))
+  }
+
+  const handleTotalTeamsChange = (value) => {
+    const nextTeams = Number(value)
+    setTotalTeams(nextTeams)
+    if (humanPick > nextTeams) {
+      setHumanPick(nextTeams)
+    }
+  }
+
+  const handleStartDraft = async (event) => {
+    event.preventDefault()
+    const started = await startDraft({
+      totalTeams,
+      humanTeam: humanPick,
+      humanTeamName: teamName,
+      roster,
+    })
+
+    if (started) {
+      setIsSetupOpen(false)
+    }
+  }
+
   return (
     <main className="draft-page" aria-live="polite">
+      {isSetupOpen ? (
+        <section className="draft-setup-overlay" role="dialog" aria-modal="true" aria-label="Draft setup">
+          <div className="draft-setup-modal card">
+            <p className="card-label">Draft Setup</p>
+            <h2>Start Your Mock Draft</h2>
+            <p className="subcopy">Choose league settings before the board opens. Position counts below are starter slots, and bench adds extra roster spots for backups.</p>
+
+            <form className="draft-setup-form" onSubmit={handleStartDraft}>
+              <div className="setup-field">
+                <label htmlFor="setup-team-name" className="control-label">
+                  Team Name
+                </label>
+                <input
+                  id="setup-team-name"
+                  type="text"
+                  className="search-input"
+                  value={teamName}
+                  onChange={(event) => setTeamName(event.target.value)}
+                  maxLength={40}
+                  placeholder="Your Team"
+                  required
+                />
+              </div>
+
+              <div className="setup-field">
+                <label htmlFor="setup-teams" className="control-label">
+                  # of Teams
+                </label>
+                <select
+                  id="setup-teams"
+                  className="sort-select"
+                  value={totalTeams}
+                  onChange={(event) => handleTotalTeamsChange(event.target.value)}
+                >
+                  {[8, 10, 12, 14, 16].map((count) => (
+                    <option key={count} value={count}>
+                      {count}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="setup-row">
+                <div className="setup-field">
+                  <label htmlFor="setup-pick" className="control-label">
+                    Draft Position
+                  </label>
+                  <select
+                    id="setup-pick"
+                    className="sort-select"
+                    value={humanPick}
+                    onChange={(event) => setHumanPick(Number(event.target.value))}
+                  >
+                    {draftPositionOptions.map((pick) => (
+                      <option key={pick} value={pick}>
+                        {pick}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="setup-field setup-button-wrap">
+                  <label className="control-label">&nbsp;</label>
+                  <button type="button" className="ghost-btn" onClick={handleRandomizeDraftPosition}>
+                    Randomize
+                  </button>
+                </div>
+              </div>
+
+              <div className="roster-section">
+                <h3>Starter Slots and Bench</h3>
+                <div className="roster-grid">
+                  {[
+                    ['QB', 'qb', 0, 3],
+                    ['RB', 'rb', 0, 6],
+                    ['WR', 'wr', 0, 6],
+                    ['TE', 'te', 0, 3],
+                    ['Flex', 'flex', 0, 3],
+                    ['K', 'k', 0, 2],
+                    ['DST', 'dst', 0, 2],
+                    ['Bench', 'bench', 0, 12],
+                    ['SuperFlex', 'superflex', 0, 2],
+                  ].map(([label, key, min, max]) => (
+                    <div key={key} className="setup-field">
+                      <label htmlFor={`roster-${key}`} className="control-label control-label-inline">
+                        {label}
+                      </label>
+                      <select
+                        id={`roster-${key}`}
+                        className="sort-select"
+                        value={roster[key]}
+                        onChange={(event) => handleRosterChange(key, event.target.value)}
+                      >
+                        {Array.from({ length: max - min + 1 }, (_, index) => min + index).map((slotCount) => (
+                          <option key={slotCount} value={slotCount}>
+                            {slotCount}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ))}
+                </div>
+                <p className="setup-summary">Total Draft Rounds: {totalRounds}</p>
+              </div>
+
+              {startDraftError ? (
+                <div className="status-panel error" role="alert">
+                  <p>{startDraftError}</p>
+                </div>
+              ) : null}
+
+              <div className="setup-actions">
+                <button type="submit" className="primary-btn" disabled={isStartingDraft}>
+                  {isStartingDraft ? 'Starting Draft...' : 'Start Draft'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+      ) : null}
+
       <header className="draft-header">
         <div>
           <p className="eyebrow">Mock Draft Simulator</p>
@@ -57,11 +244,8 @@ export default function DraftBoardPage() {
           <p className="subcopy">Track the active pick, queue upcoming selections, and filter top prospects.</p>
         </div>
         <div className="header-actions">
-          <button type="button" className="ghost-btn" onClick={reload}>
-            Refresh
-          </button>
-          <button type="button" className="ghost-btn" onClick={simulateErrorLoad}>
-            Simulate Error
+          <button type="button" className="ghost-btn" onClick={() => setIsSetupOpen(true)}>
+            Start New Draft
           </button>
         </div>
       </header>
@@ -91,9 +275,9 @@ export default function DraftBoardPage() {
               <p className="pick-number">#{data.currentPick.number}</p>
               <h2>{data.currentPick.team}</h2>
               <p className="meta-row">
-                Round {data.currentPick.round} | Record {data.currentPick.record}
+                Round {data.currentPick.round} | Pick {data.currentPick.pickInRound}
               </p>
-              <p className="clock-text">On the clock: {data.currentPick.onTheClockSince}</p>
+              <p className="clock-text">On the clock: {data.currentPick.onTheClockSince} remaining</p>
             </article>
 
             <article className="card upcoming-card">
@@ -104,7 +288,9 @@ export default function DraftBoardPage() {
                     <div>
                       <strong>#{pick.number}</strong> {pick.team}
                     </div>
-                    <span>{pick.need}</span>
+                    <span>
+                      R{pick.round} P{pick.pickInRound}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -170,6 +356,12 @@ export default function DraftBoardPage() {
               </div>
             </div>
 
+            {draftActionError ? (
+              <div className="status-panel error" role="alert">
+                <p>{draftActionError}</p>
+              </div>
+            ) : null}
+
             {filteredPlayers.length === 0 ? (
               <div className="empty-state" role="status">
                 <h3>No players match your filters</h3>
@@ -183,15 +375,25 @@ export default function DraftBoardPage() {
                       <p className="player-name">{player.name}</p>
                       <p className="player-meta">Team: {player.school}</p>
                     </div>
-                    <div className="player-badges">
-                      <span className="position-badge">{player.position}</span>
-                      <span className="rank-badge">#{player.rank} Overall</span>
-                      {player.positionRank != null && (
-                        <span className="rank-badge">{player.position}{player.positionRank}</span>
-                      )}
-                      <span className="projection-badge">Pts {player.expectedPoints}</span>
-                      <span className="projection-badge">TD {player.expectedTouchdowns}</span>
-                      <span className="projection-badge">Rec {player.expectedReceptions}</span>
+                    <div className="player-actions">
+                      <div className="player-badges">
+                        <span className="position-badge">{player.position}</span>
+                        <span className="rank-badge">#{player.rank} Overall</span>
+                        {player.positionRank != null && (
+                          <span className="rank-badge">{player.position}{player.positionRank}</span>
+                        )}
+                        <span className="projection-badge">Pts {player.expectedPoints}</span>
+                        <span className="projection-badge">TD {player.expectedTouchdowns}</span>
+                        <span className="projection-badge">Rec {player.expectedReceptions}</span>
+                      </div>
+                      <button
+                        type="button"
+                        className="draft-btn"
+                        onClick={() => draftPlayer(player.id)}
+                        disabled={draftingPlayerId === player.id || isSetupOpen || isStartingDraft}
+                      >
+                        {draftingPlayerId === player.id ? 'Drafting...' : 'Draft'}
+                      </button>
                     </div>
                   </li>
                 ))}

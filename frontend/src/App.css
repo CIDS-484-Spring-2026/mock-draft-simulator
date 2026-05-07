@@ -4,6 +4,80 @@
   padding: 2rem 1rem 3rem;
 }
 
+.draft-setup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 19, 9, 0.52);
+  backdrop-filter: blur(3px);
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.draft-setup-modal {
+  width: min(760px, 100%);
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+}
+
+.draft-setup-form {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.95rem;
+}
+
+.setup-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem;
+}
+
+.setup-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.setup-button-wrap .ghost-btn {
+  min-height: 40px;
+}
+
+.roster-section {
+  border-top: 1px solid #f0d8bf;
+  padding-top: 0.8rem;
+}
+
+.roster-section h3 {
+  margin: 0;
+  color: #2f1602;
+}
+
+.roster-grid {
+  margin-top: 0.7rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.control-label-inline {
+  letter-spacing: 0.03em;
+  text-transform: none;
+  font-size: 0.9rem;
+  color: #2f1602;
+}
+
+.setup-summary {
+  margin: 0.9rem 0 0;
+  color: #614a38;
+  font-weight: 700;
+}
+
+.setup-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .draft-header {
   display: flex;
   justify-content: space-between;
@@ -210,6 +284,33 @@ h1 {
   justify-content: flex-end;
 }
 
+.player-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.draft-btn {
+  border-radius: 10px;
+  border: 1px solid #c67e43;
+  background: linear-gradient(135deg, #cf6f2e, #934d14);
+  color: #fff;
+  font-weight: 700;
+  padding: 0.45rem 0.75rem;
+  cursor: pointer;
+}
+
+.draft-btn:hover {
+  filter: brightness(1.05);
+}
+
+.draft-btn:disabled {
+  opacity: 0.75;
+  cursor: wait;
+}
+
 .position-badge,
 .rank-badge {
   border-radius: 999px;
@@ -319,7 +420,20 @@ h1 {
     flex-direction: column;
   }
 
+  .player-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
   .player-badges {
     justify-content: flex-start;
+  }
+
+  .setup-row {
+    grid-template-columns: 1fr;
+  }
+
+  .roster-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

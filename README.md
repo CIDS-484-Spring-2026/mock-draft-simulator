@@ -1,8 +1,110 @@
 # **Fantasy Football Mock Draft Simulator**
 
-This project aims to be a web-based fantasy football mock draft simulator. A user will be able to practice for their upcoming fantasy football season by drafting with their league's rules against CPU-controlled teams. These CPU teams will draft players based on real data such as average draft position, current team needs, and more customizable criteria as well. The CPU will also have customizable settings such as draft strategy and position bias to simulate real strategies your league mates make.
+This project aims to be a web-based fantasy football mock draft simulator. A user will be able to practice for their upcoming fantasy football season by drafting with their league's rules against CPU-controlled teams. I will soon be adding options for the CPU to have customizable settings such as draft strategy and position bias to simulate real strategies your league mates make.
 
 This project's main goal is to help give a user realistic, accurate, and fast practice for an upcoming fantasy football draft.
+
+
+## **Current Features**
+
+* Draft setup popup where you can choose number of teams, your draft position, team name, and roster settings
+* Snake draft logic with live current pick and upcoming picks
+* CPU teams automatically make picks when it is their turn
+* Draft board with player search, sorting options, and position filters
+* Draft button for each player with validation/error handling
+
+## **Need to add**
+
+* Team roster view so you can see each team's drafted players during the draft
+
+
+## **Quick Setup / Install (If You Clone This Repo)**
+
+### **Prerequisites**
+
+* Python 3.11+
+* Node.js 18+ and npm
+* Windows PowerShell
+
+### **1. Clone the repository**
+
+```powershell
+git clone <your-repo-url>
+cd mock-draft-simulator
+```
+
+### **2. Create and activate a Python virtual environment**
+
+```powershell
+python -m venv .venv
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+.\.venv\Scripts\Activate.ps1
+```
+
+### **3. Install backend packages**
+
+```powershell
+cd backend
+pip install fastapi uvicorn
+cd ..
+```
+
+### **4. Install frontend packages**
+
+```powershell
+cd frontend
+npm install
+cd ..
+```
+
+
+## **How To Run The App**
+
+### **Recommended (one command from repo root)**
+
+From the repository root:
+
+```powershell
+.\dev.ps1
+```
+
+This starts both services together:
+* FastAPI backend at `http://127.0.0.1:8000`
+* Vite frontend dev server (usually `http://localhost:5173`)
+
+### **Manual option (two terminals)**
+
+Terminal 1 (backend):
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+.\.venv\Scripts\Activate.ps1
+cd backend
+python -m uvicorn main:app --reload
+```
+
+Frontend terminal:
+
+```powershell
+cd frontend
+npm run dev
+```
+
+
+## **Reviewer Notes**
+
+* Draft state is currently in-memory for milestone work.
+* Starting a new draft from the popup sets the draft configuration used by current/upcoming pick cards.
+* If testing manually, keep only one backend server running to avoid process conflicts.
+
+
+## **Draft Board Screenshot**
+
+I still need to add an updated screenshot here. The intended format will be:
+
+```markdown
+![Draft Board](frontend/public/draft-board-screenshot.png)
+```
 
 
 ## **Tech Stack**
@@ -80,10 +182,15 @@ Need data including but not limited to,
 * Add draft simulation with pick order
 * Create CPU draft logic based on ADP, position need, and team strategy
 * Create a roster display for each team as the draft progresses
+* Move data to a database
 
 ## **Milestone Videos**
 
 Milestone 1:
 https://mediaspace.wisconsin.edu/media/Milestone+1+-+FF+Mock+Draft+Simulator/1_gcak3l37
+
 Milestone 2:
+https://mediaspace.wisconsin.edu/media/Milestone+2+-+Mock+Draft+Simulator+-+Kollin+Weikel/1_4r71dyyn
+
+Milestone 3:
 

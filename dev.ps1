@@ -12,8 +12,8 @@ if (-not (Test-Path $pythonExe)) {
 Write-Host 'Starting backend (FastAPI) in background...'
 $backendJob = Start-Job -Name 'mock-draft-backend' -ScriptBlock {
     param($backendPathArg, $pythonExeArg)
-    Set-Location $backendPathArg
-    & $pythonExeArg -m uvicorn main:app --reload
+    Set-Location (Split-Path -Parent $backendPathArg)
+    & $pythonExeArg -m uvicorn backend.main:app --reload --reload-dir backend
 } -ArgumentList $backendPath, $pythonExe
 
 try {
