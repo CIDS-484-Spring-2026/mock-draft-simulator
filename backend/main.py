@@ -290,6 +290,75 @@ def best_available_player(players: List[dict], taken_ids: set, state: dict = Non
     return min(available, key=player_sort_key)
 
 
+def top_available_players(players: List[dict], taken_ids: set, limit: int = 6) -> List[dict]:
+    available = [player for player in players if int(player.get("id", -1)) not in taken_ids]
+
+    def rank_key(player: dict) -> tuple:
+        rank = player.get("overall_rank")
+        rank_value = int(rank) if rank is not None else 10**9
+        player_id = int(player.get("id", 10**9))
+        return (rank_value, player_id)
+
+    return sorted(available, key=rank_key)[: max(1, limit)]
+
+
+def cpu_position_target(position: str, roster_settings: dict) -> float:
+    qb = float(roster_settings.get("qb", 0))
+    rb = float(roster_settings.get("rb", 0))
+    wr = float(roster_settings.get("wr", 0))
+    te = float(roster_settings.get("te", 0))
+    k = float(roster_settings.get("k", 0))
+    dst = float(roster_settings.get("dst", 0))
+    flex = float(roster_settings.get("flex", 0))
+    superflex = float(roster_settings.get("superflex", 0))
+
+    targets = {
+        "QB": qb + (0.4 * superflex),
+        "RB": rb + (0.45 * flex) + (0.25 * superflex),
+        "WR": wr + (0.45 * flex) + (0.25 * superflex),
+        "TE": te + (0.1 * flex) + (0.1 * superflex),
+        "K": k,
+        "DST": dst,
+    }
+    return float(targets.get(position, 0.0))
+
+
+def cpu_pick_score(state: dict, team_id: int, player: dict) -> float:
+    position = player.get("position", "")
+    rank = player.get("overall_rank")
+    rank_value = int(rank) if rank is not None else 10**9
+    roster_settings = state.get("roster_settings", {})
+    counts = count_roster_positions(state["rosters"].get(str(team_id), []))
+    current_count = float(counts.get(position, 0))
+
+    direct_starter_target = float(roster_settings.get(position.lower(), 0))
+    soft_target = cpu_position_target(position, roster_settings)
+    need_gap = soft_target - current_count
+
+    fit_score = roster_fit_score(state, team_id, position)
+    # Aggressive profile: strongly favor filling current roster needs.
+    fills_need_bonus = float(fit_score[0]) * 30.0
+    bench_penalty = float(-fit_score[1]) * 3.0
+    need_bonus = need_gap * 22.0
+
+    overstock_penalty = 0.0
+    if current_count >= direct_starter_target and need_gap <= 0:
+        overstock_penalty = 24.0 + ((current_count - direct_starter_target) * 12.0)
+
+    # Keep rankings relevant inside the top candidate set while allowing roster needs to drive choices.
+    ranking_penalty = float(rank_value) * 0.08
+
+    return fills_need_bonus + need_bonus - bench_penalty - overstock_penalty - ranking_penalty
+
+
+def cpu_pick_from_top_candidates(players: List[dict], taken_ids: set, state: dict, team_id: int, top_n: int = 6) -> dict:
+    top_candidates = top_available_players(players, taken_ids, limit=top_n)
+    if not top_candidates:
+        return None
+
+    return max(top_candidates, key=lambda player: (cpu_pick_score(state, team_id, player), -int(player.get("overall_rank", 10**9))))
+
+
 def maybe_auto_pick_for_cpus(state: dict) -> None:
     if not state.get("is_active") or state.get("is_complete"):
         return
@@ -320,7 +389,13 @@ def maybe_auto_pick_for_cpus(state: dict) -> None:
             if int(player.get("id", -1)) not in taken_ids
             and pick_roster_validation(state, team_on_clock, player.get("position", "")) is None
         ]
-        selected_player = best_available_player(valid_candidates, taken_ids, state=state, team_id=team_on_clock)
+        selected_player = cpu_pick_from_top_candidates(
+            valid_candidates,
+            taken_ids,
+            state=state,
+            team_id=team_on_clock,
+            top_n=6,
+        )
         if not selected_player:
             state["is_complete"] = True
             state["is_active"] = False

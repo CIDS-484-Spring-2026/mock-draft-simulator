@@ -102,12 +102,18 @@ export function useDraftBoardData() {
         const draftState = statePayload?.draft_state ?? {}
         const currentPick = draftState?.current_pick ?? {}
         const upcomingPicks = Array.isArray(draftState?.upcoming_picks) ? draftState.upcoming_picks : []
+        const rosters = draftState?.rosters ?? {}
+        const teamNames = draftState?.team_names ?? {}
+        const humanTeam = Number(draftState?.human_team ?? 1)
+        const rosterSettings = draftState?.roster_settings ?? {}
+        const isComplete = Boolean(draftState?.is_complete)
 
         setData({
           currentPick: {
             number: currentPick.number ?? mockBoardMeta.currentPick.number,
             round: currentPick.round ?? mockBoardMeta.currentPick.round,
             pickInRound: currentPick.pick_in_round ?? mockBoardMeta.currentPick.pickInRound,
+            teamId: Number(currentPick.team_id ?? draftState?.team_on_clock ?? 1),
             team: currentPick.team ?? mockBoardMeta.currentPick.team,
             secondsLeft: currentPick.seconds_left ?? mockBoardMeta.currentPick.secondsLeft,
             onTheClockSince: toClock(currentPick.seconds_left ?? mockBoardMeta.currentPick.secondsLeft),
@@ -119,6 +125,11 @@ export function useDraftBoardData() {
             team: pick.team ?? `CPU Team ${index + 1}`,
           })),
           players: players.map(mapApiPlayerToBoardPlayer),
+          rosters,
+          teamNames,
+          humanTeam,
+          rosterSettings,
+          isComplete,
         })
         setStatus('success')
       } catch (fetchError) {

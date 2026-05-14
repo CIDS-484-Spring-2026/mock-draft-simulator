@@ -1,21 +1,30 @@
 # **Fantasy Football Mock Draft Simulator**
 
-This project aims to be a web-based fantasy football mock draft simulator. A user will be able to practice for their upcoming fantasy football season by drafting with their league's rules against CPU-controlled teams. I will soon be adding options for the CPU to have customizable settings such as draft strategy and position bias to simulate real strategies your league mates make.
+This project is a web-based fantasy football mock draft simulator that lets a user practice for an upcoming fantasy football season by drafting against CPU-controlled teams with league-style settings.
 
-This project's main goal is to help give a user realistic, accurate, and fast practice for an upcoming fantasy football draft.
+The goal is to provide a realistic, accurate, and fast way to run mock drafts, giving you great practice before draft day.
 
 
-## **Current Features**
+## **Working Features**
 
 * Draft setup popup where you can choose number of teams, your draft position, team name, and roster settings
 * Snake draft logic with live current pick and upcoming picks
-* CPU teams automatically make picks when it is their turn
+* Pick clock that counts down during each selection
+* CPU teams that automatically make picks when it is their turn
+* CPU pick logic that looks at the top available players and compares it to their current roster, making a pick based off of team needs
 * Draft board with player search, sorting options, and position filters
-* Draft button for each player with validation/error handling
+* Draft buttons that are locked unless it is the human player's turn
+* Left-side roster viewer that can cycle through every team with arrow buttons
+* Starter slots and bench slots that show drafted players or Empty if the slot has not been filled yet
+* Final Team popup when the draft completes, showing the human team's final roster
+* Button on the Final Team popup to start a new draft
+* Roster validation and error handling so invalid picks are blocked
 
-## **Need to add**
+## **Future Improvements**
 
-* Team roster view so you can see each team's drafted players during the draft
+* Add more CPU strategy settings like draft style or position bias controls
+* Move players to a database
+* Expand player data beyond the current JSON file
 
 
 ## **Quick Setup / Install (If You Clone This Repo)**
@@ -97,14 +106,6 @@ npm run dev
 * Starting a new draft from the popup sets the draft configuration used by current/upcoming pick cards.
 * If testing manually, keep only one backend server running to avoid process conflicts.
 
-
-## **Draft Board Screenshot**
-
-I still need to add an updated screenshot here. The intended format will be:
-
-```markdown
-![Draft Board](frontend/public/draft-board-screenshot.png)
-```
 
 
 ## **Tech Stack**
@@ -196,9 +197,8 @@ Need data including but not limited to,
 
 ## **Goals before end of Semester**
 
-* NEED: Add roster view that can switch between teams
 * MAYBE: Switch to database if time permits, not super necessary at the moment
-* MAYBE: Improve CPU draft logic
+* MAYBE: Improve CPU draft logic even further
 
 ## **Milestone Videos**
 
@@ -210,3 +210,6 @@ https://mediaspace.wisconsin.edu/media/Milestone+2+-+Mock+Draft+Simulator+-+Koll
 
 Milestone 3:
 https://mediaspace.wisconsin.edu/media/Milestone+3+-++Mock+Draft+Simulator+-+Kollin+Weikel/1_m33d761l
+
+Final Video: 
+https://mediaspace.wisconsin.edu/media/Senior+Capstone+Final+Video/1_n46fd76g 

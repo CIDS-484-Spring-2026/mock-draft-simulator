@@ -1,7 +1,117 @@
 .draft-page {
-  max-width: 1120px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: 2rem 1rem 3rem;
+}
+
+.draft-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.draft-main {
+  min-width: 0;
+}
+
+.roster-panel {
+  position: sticky;
+  top: 1rem;
+}
+
+.roster-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.roster-nav {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.arrow-btn {
+  border-radius: 10px;
+  border: 1px solid #d8b99d;
+  background: #fff6eb;
+  color: #5d3418;
+  font-weight: 800;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+
+.arrow-btn:hover {
+  border-color: #c67e43;
+  background: #ffe9d1;
+}
+
+.roster-title {
+  margin: 0.6rem 0 0;
+  font-size: 1.35rem;
+  color: #261202;
+}
+
+.roster-meta {
+  margin: 0.2rem 0 0;
+  color: #6d5645;
+  font-weight: 600;
+}
+
+.roster-list {
+  list-style: none;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.roster-item {
+  display: flex;
+  gap: 0.65rem;
+  align-items: center;
+  border: 1px solid #f1dcc9;
+  border-radius: 12px;
+  background: #fffdf8;
+  padding: 0.55rem 0.65rem;
+}
+
+.roster-slot {
+  min-width: 2.8rem;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.78rem;
+  text-align: center;
+  font-weight: 700;
+  background: #f4ecdf;
+  color: #6a4e37;
+}
+
+.roster-empty {
+  margin: 0;
+  color: #a69382;
+  font-weight: 700;
+}
+
+.bench-section {
+  margin-top: 0.85rem;
+  border-top: 1px dashed #e4ceb8;
+  padding-top: 0.75rem;
+}
+
+.bench-list {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.bench-item {
+  color: #6d5645;
+  font-size: 0.9rem;
 }
 
 .draft-setup-overlay {
@@ -19,6 +129,50 @@
   width: min(760px, 100%);
   max-height: calc(100vh - 2rem);
   overflow: auto;
+  position: relative;
+}
+
+.setup-close-btn {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  border: 1px solid #e2c2a6;
+  background: #fff3e3;
+  color: #7e4114;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.setup-close-btn:hover {
+  background: #ffe9d1;
+}
+
+.final-team-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 19, 9, 0.58);
+  backdrop-filter: blur(3px);
+  z-index: 45;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.final-team-modal {
+  width: min(760px, 100%);
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+}
+
+.final-team-subcopy {
+  margin-bottom: 0.7rem;
+}
+
+.final-team-content {
+  margin-top: 0.3rem;
 }
 
 .draft-setup-form {
@@ -394,6 +548,14 @@ h1 {
 }
 
 @media (max-width: 700px) {
+  .draft-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .roster-panel {
+    position: static;
+  }
+
   .draft-header {
     flex-direction: column;
   }
